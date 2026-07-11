@@ -5,12 +5,21 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import workoutRoutes from './routes/workouts.js';
 
+// Load environment variables FIRST
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ CORRECT CORS Configuration - Allow multiple origins
+// Check if MONGODB_URI exists
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI is not defined in environment variables!');
+  console.error('Please set MONGODB_URI in Render dashboard');
+  process.exit(1);
+}
+
+// ✅ CORS Configuration - Allow multiple origins
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
@@ -42,7 +51,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK',
-    environment: process.env.NODE_ENV,
+    environment: process.env.NODE_ENV || 'development',
+    mongodb: MONGODB_URI ? '✅ Configured' : '❌ Missing',
     timestamp: new Date().toISOString()
   });
 });
@@ -65,11 +75,23 @@ app.use((req, res) => {
   res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
 });
 
-// MongoDB connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ Connected to MongoDB'))
+// MongoDB connection with better error handling
+console.log('🔌 Attempting to connect to MongoDB...');
+console.log(`📡 MONGODB_URI: ${MONGODB_URI.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@')}`); // Hide credentials in logs
+
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    console.log('✅ Connected to MongoDB Atlas successfully!');
+    console.log(`📊 Database: ${mongoose.connection.name}`);
+    console.log(`🌐 Host: ${mongoose.connection.host}`);
+  })
   .catch(err => {
-    console.error('❌ MongoDB connection error:', err);
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error('Please check:');
+    console.error('1. MONGODB_URI is correct in Render environment variables');
+    console.error('2. Username and password are correct');
+    console.error('3. Network access is enabled (0.0.0.0/0) in MongoDB Atlas');
+    console.error('4. Database name is correct');
     process.exit(1);
   });
 
