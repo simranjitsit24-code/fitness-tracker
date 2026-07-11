@@ -4,6 +4,7 @@ A full-stack fitness tracking application built with React, Node.js, Express, an
 
 
 ## Intern Id 
+INTERN ID = CT-3766
 
 ## ✨ Features
 
