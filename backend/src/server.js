@@ -10,48 +10,72 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// ✅ CORRECT CORS Configuration - Allow multiple origins
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://fitness-tracker-1-sasm.onrender.com', // Your frontend URL
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('❌ Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Request logging middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK',
+    environment: process.env.NODE_ENV,
+    timestamp: new Date().toISOString()
+  });
 });
 
-// Routes - THIS IS THE IMPORTANT PART
-app.use('/api/auth', authRoutes);     // This makes /api/auth/register work
-app.use('/api/workouts', workoutRoutes); // This makes /api/workouts work
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/workouts', workoutRoutes);
 
-// Test route to check if server is running
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'Server is running!' });
-});
-
-// Error handling middleware
+// Error handling
 app.use((err, req, res, next) => {
   console.error('Error:', err);
-  res.status(500).json({ message: 'Something went wrong!', error: err.message });
+  res.status(500).json({ 
+    message: 'Something went wrong!',
+    error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message 
+  });
 });
 
-// 404 handler for undefined routes
+// 404 handler
 app.use((req, res) => {
-  console.log('404 - Route not found:', req.method, req.url);
   res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fitness-tracker')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('✅ Connected to MongoDB'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1);
+  });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📍 Test: http://localhost:${PORT}/api/test`);
+  console.log(`📍 Health: http://localhost:${PORT}/api/health`);
+  console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`✅ Allowed origins:`, allowedOrigins);
 });
