@@ -1,0 +1,185 @@
+# ============================================
+# ENVIRONMENT VARIABLES - NEVER COMMIT!
+# ============================================
+*.env
+*.env.*
+!.env.example
+!.env.sample
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+.env.production
+.env.development
+.env.test
+
+# ============================================
+# DEPENDENCIES
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+
+# ============================================
+# BUILD OUTPUTS
+# ============================================
+dist/
+build/
+.vite/
+*.tsbuildinfo
+*.tsbuildinfo.*
+frontend/dist/
+frontend/build/
+backend/dist/
+backend/build/
+out/
+.next/
+.nuxt/
+
+# ============================================
+# IDE & EDITOR FILES
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+desktop.ini
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# ============================================
+# LOGS
+# ============================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+access.log
+error.log
+
+# ============================================
+# OS FILES
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+*.tmp
+*.temp
+
+# ============================================
+# TESTING
+# ============================================
+coverage/
+.nyc_output/
+*.test.js
+*.spec.js
+__tests__/
+jest.config.js
+*.test.ts
+*.spec.ts
+__mocks__/
+
+# ============================================
+# MISC
+# ============================================
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+.env.production
+.env.development
+.temp/
+.tmp/
+.cache/
+.parcel-cache/
+*.tgz
+*.tar.gz
+*.zip
+.DS_Store
+**/.DS_Store
+
+# ============================================
+# DATABASE
+# ============================================
+*.sqlite
+*.db
+*.sqlite3
+*.mongo
+
+# ============================================
+# SECURITY
+# ============================================
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+secrets/
+.credentials/
+.aws/
+
+# ============================================
+# BACKUP FILES
+# ============================================
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# ============================================
+# MONGOOSE
+# ============================================
+*.mongodb
+dump/
+mongodb-data/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
