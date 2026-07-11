@@ -101,7 +101,7 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center mb-8">Create Account</h2>
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Create Account</h2>
         
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -111,29 +111,29 @@ const Register = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Full Name</label>
+            <label className="block text-gray-900 font-medium mb-2">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-gray-900 bg-white"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Email</label>
+            <label className="block text-gray-900 font-medium mb-2">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-gray-900 bg-white"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block text-gray-900 font-medium mb-2">
               Password <span className="text-sm text-gray-500">(8+ chars, 1 letter, 1 number, 1 special)</span>
             </label>
             <div className="relative">
@@ -141,7 +141,7 @@ const Register = () => {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 pr-10 ${
+                className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 pr-10 text-gray-900 bg-white ${
                   password && !isValid ? 'border-red-500' : 
                   password && isValid ? 'border-green-500' : 'border-gray-300'
                 }`}
@@ -174,7 +174,7 @@ const Register = () => {
                     style={{ width: `${getPasswordStrength()}%` }}
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-600 mt-1">
                   Password strength: {getPasswordStrength() === 100 ? 'Strong 💪' : 
                                     getPasswordStrength() >= 75 ? 'Good' : 
                                     getPasswordStrength() >= 50 ? 'Fair' : 'Weak'}
@@ -200,13 +200,13 @@ const Register = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
+            <label className="block text-gray-900 font-medium mb-2">Confirm Password</label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 pr-10 ${
+                className={`w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500 pr-10 text-gray-900 bg-white ${
                   confirmPassword && !doPasswordsMatch ? 'border-red-500' : 
                   confirmPassword && doPasswordsMatch ? 'border-green-500' : 'border-gray-300'
                 }`}
@@ -230,7 +230,7 @@ const Register = () => {
               </button>
             </div>
             {confirmPassword && doPasswordsMatch && (
-              <p className="text-green-500 text-sm mt-1">✅ Passwords match</p>
+              <p className="text-green-600 text-sm mt-1">✅ Passwords match</p>
             )}
             {confirmPassword && !doPasswordsMatch && (
               <p className="text-red-500 text-sm mt-1">❌ Passwords do not match</p>
@@ -246,9 +246,9 @@ const Register = () => {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-gray-600">
+        <p className="mt-4 text-center text-gray-900">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:text-blue-800">
+          <Link to="/login" className="text-blue-600 hover:text-blue-800 font-medium">
             Login
           </Link>
         </p>
