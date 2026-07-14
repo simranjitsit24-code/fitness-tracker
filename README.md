@@ -5,7 +5,7 @@ A full-stack fitness tracking application built with React, Node.js, Express, an
 https://fitness-tracker-1-sasm.onrender.com
 
 ## Intern Id 
-INTERN ID = CT-3766
+INTERN ID = CITS5354
 
 ## ✨ Features
 
